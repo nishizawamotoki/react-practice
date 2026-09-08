@@ -8,12 +8,9 @@ export default function App() {
   const [tasks, setTasks] = useState(tasksData);
 
   const handleToggle = (id) => {
-    const newTasks = tasks.map((task) => {
-      if (task.id === id) {
-        return { ...task, completed: !task.completed };
-      }
-      return task;
-    });
+    const newTasks = tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task,
+    );
     setTasks(newTasks);
   };
 
