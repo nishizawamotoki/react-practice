@@ -15,8 +15,8 @@ export default function App() {
   };
 
   const handleDelete = (id) => {
-    const newTask = tasks.filter((task) => task.id !== id);
-    setTasks(newTask);
+    const newTasks = tasks.filter((task) => task.id !== id);
+    setTasks(newTasks);
   };
 
   const handleAdd = (title) => {
