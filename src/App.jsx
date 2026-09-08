@@ -2,9 +2,19 @@ import "./App.css";
 import { tasks as tasksData } from "./data";
 import TaskList from "./TaskList";
 import TaskForm from "./TaskForm";
-import { useReducer } from "react";
+import { useContext, useReducer } from "react";
+import { ThemeContext, ThemeProvider } from "./ThemeContext";
 
 export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+
+function AppContent() {
+  const { isDark, setIsDark } = useContext(ThemeContext);
   const [taskState, dispatch] = useReducer(tasksReducer, {
     history: [],
     tasks: tasksData,
@@ -31,7 +41,16 @@ export default function App() {
   };
 
   return (
-    <>
+    <div className={isDark ? "app dark" : "app"}>
+      <label>
+        <input
+          type="checkbox"
+          onChange={() => setIsDark(!isDark)}
+          checked={isDark}
+          className={isDark ? "dark" : undefined}
+        />
+        ダークモード
+      </label>
       <TaskForm onAdd={handleAdd} />
       <TaskList
         tasks={taskState.tasks}
@@ -41,7 +60,7 @@ export default function App() {
       <button onClick={handleUndo} disabled={taskState.history.length === 0}>
         元に戻す
       </button>
-    </>
+    </div>
   );
 }
 

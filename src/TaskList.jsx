@@ -1,4 +1,8 @@
+import { useContext } from "react";
+import { ThemeContext } from "./ThemeContext";
+
 export default function TaskList({ tasks, onToggle, onDelete }) {
+  const { isDark } = useContext(ThemeContext);
   const listTask = tasks.map((task) => (
     <li key={task.id}>
       <label>
@@ -6,6 +10,7 @@ export default function TaskList({ tasks, onToggle, onDelete }) {
           type="checkbox"
           checked={task.completed}
           onChange={() => onToggle(task.id)}
+          className={isDark ? "dark" : undefined}
         />
         {task.completed ? <del>{task.title}</del> : task.title}
       </label>
