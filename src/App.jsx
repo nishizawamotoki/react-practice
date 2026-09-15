@@ -1,9 +1,9 @@
 import "./App.css";
-import { tasks as tasksData } from "./data";
 import TaskList from "./TaskList";
 import TaskForm from "./TaskForm";
-import { useContext, useReducer } from "react";
+import { useContext } from "react";
 import { ThemeContext, ThemeProvider } from "./ThemeContext";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 export default function App() {
   return (
@@ -15,10 +15,7 @@ export default function App() {
 
 function AppContent() {
   const { isDark, setIsDark } = useContext(ThemeContext);
-  const [taskState, dispatch] = useReducer(tasksReducer, {
-    history: [],
-    tasks: tasksData,
-  });
+  const [taskState, dispatch] = useLocalStorage();
 
   const handleAdd = (title) => {
     if (title === "") {
@@ -64,42 +61,4 @@ function AppContent() {
       </button>
     </div>
   );
-}
-
-function tasksReducer(state, action) {
-  switch (action.type) {
-    case "add":
-      return {
-        history: [...state.history, state.tasks],
-        tasks: [
-          ...state.tasks,
-          {
-            id: action.nextId,
-            title: action.title,
-            completed: false,
-          },
-        ],
-      };
-    case "toggle":
-      return {
-        history: [...state.history, state.tasks],
-        tasks: state.tasks.map((task) =>
-          task.id === action.id
-            ? { ...task, completed: !task.completed }
-            : task,
-        ),
-      };
-    case "delete":
-      return {
-        history: [...state.history, state.tasks],
-        tasks: state.tasks.filter((task) => task.id !== action.id),
-      };
-    case "undo":
-      return {
-        history: [...state.history.slice(0, -1)],
-        tasks: state.history.at(-1),
-      };
-    default:
-      return state;
-  }
 }
