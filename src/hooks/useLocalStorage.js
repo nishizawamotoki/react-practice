@@ -50,6 +50,11 @@ function tasksReducer(state, action) {
         history: [...state.history.slice(0, -1)],
         tasks: state.history.at(-1),
       };
+    case "sync":
+      return {
+        history: [],
+        tasks: action.tasks,
+      };
     default:
       return state.tasks;
   }

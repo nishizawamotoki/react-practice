@@ -1,7 +1,7 @@
 import "./App.css";
 import TaskList from "./TaskList";
 import TaskForm from "./TaskForm";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ThemeContext, ThemeProvider } from "./ThemeContext";
 import useLocalStorage from "./hooks/useLocalStorage";
 
@@ -16,6 +16,17 @@ export default function App() {
 function AppContent() {
   const { isDark, setIsDark } = useContext(ThemeContext);
   const [taskState, dispatch] = useLocalStorage();
+
+  useEffect(() => {
+    const handleStorage = (event) => {
+      if (event.key === "tasks" && event.newValue) {
+        dispatch({ type: "sync", tasks: JSON.parse(event.newValue) });
+      }
+    };
+
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
 
   const handleAdd = (title) => {
     if (title === "") {
