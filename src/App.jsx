@@ -25,7 +25,9 @@ function AppContent() {
       return;
     }
 
-    dispatch({ type: "add", title });
+    const nextId =
+      taskState.tasks.length === 0 ? 1 : taskState.tasks.at(-1).id + 1;
+    dispatch({ type: "add", title, nextId });
   };
 
   const handleToggle = (id) => {
@@ -72,7 +74,7 @@ function tasksReducer(state, action) {
         tasks: [
           ...state.tasks,
           {
-            id: state.tasks.length === 0 ? 1 : state.tasks.at(-1) + 1,
+            id: action.nextId,
             title: action.title,
             completed: false,
           },
