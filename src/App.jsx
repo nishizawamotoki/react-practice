@@ -100,6 +100,6 @@ function tasksReducer(state, action) {
         tasks: state.history.at(-1),
       };
     default:
-      return state.tasks;
+      return state;
   }
 }
