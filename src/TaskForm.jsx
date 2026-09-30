@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ThemeContext } from "./ThemeContext";
 
 export default function TaskForm({ onAdd }) {
+  const { isDark } = useContext(ThemeContext);
   const [title, setTitle] = useState("");
 
   const handleSubmit = (e) => {
@@ -15,6 +17,7 @@ export default function TaskForm({ onAdd }) {
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        className={isDark ? "dark" : undefined}
       />
       <button>追加</button>
     </form>

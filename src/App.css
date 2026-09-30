@@ -1,4 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+input {
+  border: 1px solid;
+}
+
 ul {
   padding-left: 0;
   list-style: none;
+}
+
+.app {
+  padding: 8px;
+  min-height: 100vh;
+}
+
+.app.dark {
+  background-color: #212121;
+  color: white;
+}
+
+input[type="text"].dark {
+  background-color: #757575;
+  color: white;
+}
+
+input[type="checkbox"].dark {
+  accent-color: #757575;
 }
