@@ -1,11 +1,10 @@
 import { useEffect, useReducer } from "react";
-import { tasks as tasksData } from "../data";
 
 export default function useLocalStorage() {
   const [state, dispatch] = useReducer(tasksReducer, undefined, () => {
     const saved = localStorage.getItem("tasks");
     return {
-      tasks: saved ? JSON.parse(saved) : tasksData,
+      tasks: saved ? JSON.parse(saved) : [],
       history: [],
     };
   });
